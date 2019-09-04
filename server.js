@@ -38,7 +38,9 @@ if (commander.chatroomname) chatroomname = commander.chatroomname;
 //控制面板网页
 webpanel.get('/' + paneltoken,function (req, res) {
   var webcontent = '<title>聊天室控制面板</title>' + '当前在线人数：' + usercount + '</br>' + '聊天数据总量：' + msgdata + '字节'  + '</br></br>用户列表：' + '<ul>'
-  users.forEach(n => webcontent += '<li>' + n + '</li>');
+  for (var i = 0; i < usercount; i++) {
+    webcontent += '<li>' + users[i] + '</li>';
+  }
   webcontent += '</ul>'
   res.send(webcontent);
 });
