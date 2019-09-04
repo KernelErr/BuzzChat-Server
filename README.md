@@ -15,9 +15,10 @@ npm install
 node server.js
 ```
 软件有以下参数：
-- -p, --chatport [port] 即为Socket.io监听端口
-- -P, --panelport [port] 即为Web管理监听端口，访问localhost:port/[Panel Tocken]即可进入控制面板
+- -p, --chatport [port] 即为Socket.io监听端口，默认3001
+- -P, --panelport [port] 即为Web管理监听端口，访问localhost:port/[Panel Tocken]即可进入控制面板，默认3000
 - -n, --chatroomname [chatroomname] 聊天室的名字，会作为客户端的窗口标题
+
 软件运行后会输出以下参数：
 - Panel Tocken，即进入控制面板需要跟上的参数
 - Chat Tocken，即客户端输入的密匙
