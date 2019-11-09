@@ -9,6 +9,9 @@ const chatio = require('socket.io')(chatserver,{
     path: '/',
     serveClient: false
 });
+var ss = require('socket.io-stream');
+var path = require('path');
+var fs = require('fs');
 
 //声明状态
 var panelport = 3000;
@@ -21,6 +24,7 @@ var users = [];
 var chatroomname = ""
 var encipher = crypto.createCipheriv('aes-256-ecb', chattoken, null);
 var decipher = crypto.createDecipheriv('aes-256-ecb', chattoken, null);
+var lastestfile = ""
 
 //初始化交互
 console.log('[*] Panel Tocken:' + paneltoken);
@@ -63,6 +67,17 @@ chatio.on('connection', function(socket){
     });
 
     chatio.emit('chatroomname', chatroomname);
+
+    ss(socket).on('sendfile', function(stream, data) {
+      var filename = path.basename(data.name);
+      stream.pipe(fs.createWriteStream("./ChatFiles/" + filename));
+      lastestfile = filename;
+    });
+
+    ss(socket).on('recvfile', function (stream, data) {
+      var FileStream = fs.createReadStream("./ChatFiles/" + lastestfile);
+      FileStream.pipe(stream);
+    });
 
     socket.on('message', function (msg){
       msgdata += msg.length;
